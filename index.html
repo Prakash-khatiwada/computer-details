@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Department Details</title>
+    <title>Computer Details</title>
 </head>
 <body>
-    <h1>Department Details</h1>
-    <h2>Computer Department</h2>
-    <p><a href="https://forms.gle/qswgH1KkERJNc6vf7">View Computer Department Details</a></p>
-    <p><a href="https://forms.gle/H7jqdG47EjzdudrR9">Input Computer Department Details</a></p>
-
-    <!-- Add more departments as needed -->
+    <h1>Computer Details</h1>
+    <pre id="details">
+    </pre>
+    <script>
+        fetch('computer-details.txt')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('details').textContent = data;
+            });
+    </script>
 </body>
 </html>
