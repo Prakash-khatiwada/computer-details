@@ -1,0 +1,11 @@
+Brand: Dell
+Model: XPS 13
+Specifications: Intel i7, 16GB RAM, 512GB SSD
+Price: $1200
+Date of Purchase: 2023-01-15
+
+Brand: HP
+Model: Spectre x360
+Specifications: Intel i5, 8GB RAM, 256GB SSD
+Price: $900
+Date of Purchase: 2022-11-20
