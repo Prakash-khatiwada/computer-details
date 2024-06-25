@@ -1,71 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Computer Details</title>
-    <script src="https://alcdn.msauth.net/browser/2.15.0/js/msal-browser.min.js"></script>
-    <script>
-        const msalConfig = {
-            auth: {
-                clientId: 'dcf57af0-93bd-4ea8-8b19-3edaa78c798a',
-                redirectUri: 'https://prakash-khatiwada.github.io/computer-details/',
-            },
-        };
-
-        const msalInstance = new msal.PublicClientApplication(msalConfig);
-
-        const loginRequest = {
-            scopes: ["Files.Read"]
-        };
-
-        const fileRequest = {
-            scopes: ["Files.Read"],
-            resource: "https://graph.microsoft.com/v1.0/me/drive/root:/computer-details.txt"
-        };
-
-        function handleResponse(response) {
-            if (response !== null) {
-                console.log('id_token acquired at: ' + new Date().toString());
-                getFileContent();
-            } else {
-                selectAccount();
-            }
-        }
-
-        function selectAccount() {
-            const currentAccounts = msalInstance.getAllAccounts();
-            if (currentAccounts.length === 0) {
-                msalInstance.loginRedirect(loginRequest);
-            } else {
-                getFileContent();
-            }
-        }
-
-        function getFileContent() {
-            msalInstance.acquireTokenSilent(fileRequest).then((response) => {
-                fetch(response.resource, {
-                    headers: {
-                        'Authorization': 'Bearer ' + response.accessToken
-                    }
-                }).then(response => response.text()).then(data => {
-                    document.getElementById('details').textContent = data;
-                }).catch(error => {
-                    console.error(error);
-                });
-            }).catch(error => {
-                console.error(error);
-                msalInstance.acquireTokenRedirect(fileRequest);
-            });
-        }
-
-        window.onload = function () {
-            msalInstance.handleRedirectPromise().then(handleResponse).catch((error) => {
-                console.error(error);
-            });
-        };
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Details</title>
 </head>
 <body>
-    <h1>Computer Details</h1>
-    <pre id="details"></pre>
+    <h1>Employee Details</h1>
+    
+    <div>
+        <h2>Employee 1</h2>
+        <p>Employee information goes here...</p>
+        <button onclick="showDepartments('emp1')">View Departments</button>
+        
+        <div id="emp1Departments" style="display: none;">
+            <h3>Departments</h3>
+            <ul>
+                <li><a href="<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Details</title>
+</head>
+<body>
+    <h1>Employee Details</h1>
+    
+    <div>
+        <h2>Employee 1</h2>
+        <p>Employee information goes here...</p>
+        <button onclick="showDepartments('emp1')">View Departments</button>
+        
+        <div id="emp1Departments" style="display: none;">
+            <h3>Departments</h3>
+            <ul>
+                <li><a href="https://drive.google.com/drive/folders/1oPxWa2-lwPT5P11SzGq2MDTnfYtVm88I?usp=drive_link">Department 1</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1oPxWa2-lwPT5P11SzGq2MDTnfYtVm88I?usp=drive_link">Department 2</a></li>
+                <!-- Add more departments as needed -->
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h2>Employee 2</h2>
+        <p>Employee information goes here...</p>
+        <button onclick="showDepartments('emp2')">View Departments</button>
+        
+        <div id="emp2Departments" style="display: none;">
+            <h3>Departments</h3>
+            <ul>
+                <li><a href="https://drive.google.com/file/d/1CNN3H7HfaYpUPNKYVZoOGxFYhpA7DoH2/view?usp=drive_link">Department 1</a></li>
+                <li><a href="https://drive.google.com/file/d/1CNN3H7HfaYpUPNKYVZoOGxFYhpA7DoH2/view?usp=drive_link">Department 2</a></li>
+                <!-- Add more departments as needed -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- JavaScript to toggle department visibility -->
+    <script>
+        function showDepartments(employeeId) {
+            var departments = document.getElementById(employeeId + 'Departments');
+            if (departments.style.display === 'none') {
+                departments.style.display = 'block';
+            } else {
+                departments.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+">Department 1</a></li>
+                <li><a href="https://drive.google.com/...">Department 2</a></li>
+                <!-- Add more departments as needed -->
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h2>Employee 2</h2>
+        <p>Employee information goes here...</p>
+        <button onclick="showDepartments('emp2')">View Departments</button>
+        
+        <div id="emp2Departments" style="display: none;">
+            <h3>Departments</h3>
+            <ul>
+                <li><a href="https://drive.google.com/...">Department 1</a></li>
+                <li><a href="https://drive.google.com/...">Department 2</a></li>
+                <!-- Add more departments as needed -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- JavaScript to toggle department visibility -->
+    <script>
+        function showDepartments(employeeId) {
+            var departments = document.getElementById(employeeId + 'Departments');
+            if (departments.style.display === 'none') {
+                departments.style.display = 'block';
+            } else {
+                departments.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
