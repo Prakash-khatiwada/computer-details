@@ -2,17 +2,70 @@
 <html>
 <head>
     <title>Computer Details</title>
+    <script src="https://alcdn.msauth.net/browser/2.15.0/js/msal-browser.min.js"></script>
+    <script>
+        const msalConfig = {
+            auth: {
+                clientId: 'dcf57af0-93bd-4ea8-8b19-3edaa78c798a',
+                redirectUri: 'https://prakash-khatiwada.github.io/computer-details/',
+            },
+        };
+
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
+        const loginRequest = {
+            scopes: ["Files.Read"]
+        };
+
+        const fileRequest = {
+            scopes: ["Files.Read"],
+            resource: "https://graph.microsoft.com/v1.0/me/drive/root:/computer-details.txt"
+        };
+
+        function handleResponse(response) {
+            if (response !== null) {
+                console.log('id_token acquired at: ' + new Date().toString());
+                getFileContent();
+            } else {
+                selectAccount();
+            }
+        }
+
+        function selectAccount() {
+            const currentAccounts = msalInstance.getAllAccounts();
+            if (currentAccounts.length === 0) {
+                msalInstance.loginRedirect(loginRequest);
+            } else {
+                getFileContent();
+            }
+        }
+
+        function getFileContent() {
+            msalInstance.acquireTokenSilent(fileRequest).then((response) => {
+                fetch(response.resource, {
+                    headers: {
+                        'Authorization': 'Bearer ' + response.accessToken
+                    }
+                }).then(response => response.text()).then(data => {
+                    document.getElementById('details').textContent = data;
+                }).catch(error => {
+                    console.error(error);
+                });
+            }).catch(error => {
+                console.error(error);
+                msalInstance.acquireTokenRedirect(fileRequest);
+            });
+        }
+
+        window.onload = function () {
+            msalInstance.handleRedirectPromise().then(handleResponse).catch((error) => {
+                console.error(error);
+            });
+        };
+    </script>
 </head>
 <body>
     <h1>Computer Details</h1>
-    <pre id="details">
-    </pre>
-    <script>
-        fetch('computer-details.txt')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('details').textContent = data;
-            });
-    </script>
+    <pre id="details"></pre>
 </body>
 </html>
